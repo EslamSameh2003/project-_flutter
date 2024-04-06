@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:test1/Screen_home.dart';
 import 'package:test1/SignUp.dart';
+import 'package:test1/EmployeeProfile.dart';
 
 class Login extends StatelessWidget {
 
@@ -95,7 +96,7 @@ class Login extends StatelessWidget {
                         {
                       Navigator.push(
                           context,
-                        MaterialPageRoute(builder:(context)=> HomeScreen()),);
+                        MaterialPageRoute(builder:(context)=> EmployeeProfile()),);
                         }
                       else
                         {
