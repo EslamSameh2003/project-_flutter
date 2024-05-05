@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'Login.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -15,7 +16,18 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+appBar: AppBar(
+  elevation: 0,
+  backgroundColor: Colors.white,
+  leading: GestureDetector(
+      onTap: (){
+        Navigator.pop(
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );
+      },
+      child: Icon(Icons.arrow_back_sharp,color: Colors.black)),
+),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
@@ -34,8 +46,13 @@ class _SignupState extends State<Signup> {
                     print(value);
                   },
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.teal)
+                    ),
                     border: OutlineInputBorder(),
                     labelText: "User Name",
+                    labelStyle: TextStyle(color: Colors.teal),
+
                   ),
                 ),
                 SizedBox(
@@ -49,10 +66,15 @@ class _SignupState extends State<Signup> {
                     print(value);
                   },
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.teal)
+                    ),
                     border: OutlineInputBorder(),
                     labelText: "EmailAddress",
+                    labelStyle: TextStyle(color: Colors.teal),
                     prefixIcon: Icon(
-                      Icons.email_outlined,
+                      Icons.email,
+                      color: Colors.grey,
                     ),
                   ),
                 ),
@@ -67,11 +89,16 @@ class _SignupState extends State<Signup> {
                   onFieldSubmitted: (String value) {
                     print(value);
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.teal)
+                    ),
                     border: OutlineInputBorder(),
                     labelText: "Password",
+                    labelStyle: TextStyle(color: Colors.teal),
                     prefixIcon: Icon(
                       Icons.lock,
+                      color: Colors.grey,
                     ),
                     suffix: Icon(
                       Icons.remove_red_eye,
@@ -102,7 +129,7 @@ class _SignupState extends State<Signup> {
                               Icons.business,
                               size: 50.0,
                               color: _userType == 'company'
-                                  ? Colors.deepPurple[200]
+                                  ? Colors.teal[200]
                                   : Colors.grey,
                             ),
                             Text(
@@ -110,7 +137,7 @@ class _SignupState extends State<Signup> {
                               style: TextStyle(
                                 fontSize: 16.0,
                                 color: _userType == 'company'
-                                    ? Colors.deepPurple[200]
+                                    ? Colors.teal[200]
                                     : Colors.grey,
                               ),
                             ),
@@ -132,7 +159,7 @@ class _SignupState extends State<Signup> {
                               Icons.person,
                               size: 50.0,
                               color: _userType == 'employee'
-                                  ? Colors.deepPurple[200]
+                                  ? Colors.teal[200]
                                   : Colors.grey,
                             ),
                             Text(
@@ -140,7 +167,7 @@ class _SignupState extends State<Signup> {
                               style: TextStyle(
                                 fontSize: 16.0,
                                 color: _userType == 'employee'
-                                    ? Colors.deepPurple[200]
+                                    ? Colors.teal[200]
                                     : Colors.grey,
                               ),
                             ),
@@ -154,10 +181,10 @@ class _SignupState extends State<Signup> {
 
                 ///////////////////////////
                 Container(
-                 // color: Colors.indigo,
                   width: double.infinity,
 
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
                     onPressed: () {
                       print(email_cont.text);
                       print(pass_cont.text);

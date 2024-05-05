@@ -1,21 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test1/storage_cv.dart';
-// import 'package:test1/Screen_home.dart';
 import 'Job_text_field.dart';
+import 'comp_home.dart';
 
-import 'empoloyee_home.dart';
 
-class EmployeeProfile extends StatefulWidget {
+class CompanyProfile extends StatefulWidget {
+  const CompanyProfile({super.key});
+
   @override
-  _EmployeeProfileState createState() => _EmployeeProfileState();
+  State<CompanyProfile> createState() => _CompanyProfileState();
 }
 
-class _EmployeeProfileState extends State<EmployeeProfile> {
+class _CompanyProfileState extends State<CompanyProfile> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
+
+  TextEditingController jobController =TextEditingController();
+  TextEditingController requirementController  =TextEditingController();
+
 
   bool _isEditing = false;
 
@@ -29,21 +33,22 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
     _emailController.text = '';
   }
 
-  int _selectedIndexEmployeeProfile = 1;
+  int _selectedIndexCompanyProfile = 1;
 
-  void _onItemTappedEmployeeProfile(int index) {
-    if (_selectedIndexEmployeeProfile != index) {
+  void _onItemTappedCompanyProfile(int index) {
+    if (_selectedIndexCompanyProfile != index) {
       setState(() {
-        _selectedIndexEmployeeProfile = index;
+        _selectedIndexCompanyProfile = index;
       });
-      if (_selectedIndexEmployeeProfile == 0) {
+      if (_selectedIndexCompanyProfile == 0) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => EmployeeHome()),
+          MaterialPageRoute(builder: (context) => CompHome()),
         );
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +60,8 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
             children: [
               CircleAvatar(
                 radius: 70.0,
-                backgroundImage: AssetImage('profile.jpeg'),
+                child:Image.asset("lib/images/company1.jpeg") ,
+                // backgroundImage: Image.asset("lib/images/company1.jpeg"),
               ),
               SizedBox(height: 50,),
               _buildProfileField('Name', _nameController, CupertinoIcons.person),
@@ -66,6 +72,8 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
               SizedBox(height: 20,),
               _buildProfileField('Email', _emailController, CupertinoIcons.mail),
               SizedBox(height: 20,),
+
+
               Container(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -84,43 +92,60 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
                     });
                   },
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(20, 50),
                     backgroundColor: Colors.white,
                   ),
                   child: Text(
                     _isEditing ? 'Save' : 'Edit',
                     style: TextStyle(
-                      fontSize: 20,
                       color: Colors.teal,
                     ),
                   ),
                 ),
               ),
+
               SizedBox(height: 20,),
 
               ElevatedButton(
-
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(300, 50),
+                    padding: EdgeInsets.symmetric(vertical: 15,horizontal: 110),
                     backgroundColor: Colors.teal.withOpacity(.8),),
 
                   onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddCv()),
-                    );
+                    showModalBottomSheet(
+                      context: context,
+                      builder: ( BuildContext Context){
+                        return Column(
+                          children: [
+                            SizedBox(height: 30,),
 
+                            Padding(
+                              padding: const  EdgeInsets.symmetric(horizontal: 30,),
+                              child: JobTextField(
+                                hintText: "Title",
+                                controller:jobController ,
+                              ),
+                            ),
+
+                            SizedBox(height: 30,),
+                            JobTextField(
+                              hintText: "Add Requirements",
+                              controller: requirementController,
+                            ),
+
+                            SizedBox(
+                              height: 150,
+                              child: Center(child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(vertical: 15,horizontal: 40),
+                                  backgroundColor: Colors.teal,),
+                                onPressed: () {  },
+                                child: const Text("Done"),),),),
+                          ],
+                        );
+                      },);
                   },
-                  child: const Text("Storage CV ",
-                    style:
-                  TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-
-                  ),
-                  )
+                  child: const Text("Add Job",style: TextStyle(color: Colors.black),)
               ),
-
             ],
           ),
         ),
@@ -130,15 +155,16 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.teal[200],
         iconSize: 30.0,
-        currentIndex: _selectedIndexEmployeeProfile,
-        onTap: _onItemTappedEmployeeProfile,
+        currentIndex: _selectedIndexCompanyProfile,
+        onTap:_onItemTappedCompanyProfile,
         items: [
-          BottomNavigationBarItem(label: "Employee Home",icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: "Employee Profile",icon: Icon(Icons.person)),
+          BottomNavigationBarItem(label: "Comapny Home",icon: Icon(Icons.home)),
+          BottomNavigationBarItem(label: "Company Profile",icon: Icon(Icons.person)),
         ],
       ),
     );
   }
+
 
   Widget _buildProfileField(String title, TextEditingController controller, IconData iconData) {
     return Container(
@@ -166,12 +192,12 @@ class _EmployeeProfileState extends State<EmployeeProfile> {
         ),
       )
           : ListTile(
-            title: Text(title),
-             subtitle: Text(controller.text),
-             leading: Icon(iconData),
+        title: Text(title),
+        subtitle: Text(controller.text),
+        leading: Icon(iconData),
       ),
     );
   }
-}
 
+}
 

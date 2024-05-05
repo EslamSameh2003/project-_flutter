@@ -1,16 +1,21 @@
 import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:test1/Screen_home.dart';
-import 'package:test1/SignUp.dart';
-import 'package:test1/EmployeeProfile.dart';
+import 'EmployeeProfile.dart';
+import 'SignUp.dart';
+import 'comp_home.dart';
+import 'empoloyee_home.dart';
+
 
 class Login extends StatelessWidget {
 
-  var email_cont=TextEditingController();
-  var pass_cont=TextEditingController();
+  var email_cont1=TextEditingController();
+  var pass_cont1=TextEditingController();
+
+  var email_cont2=TextEditingController();
+  var pass_cont2=TextEditingController();
   //////////////////////////////////////////////////////////////
   bool Email_check( String s1){
-    String e1="eslamsameh@gmail.com";
+    String e1="eslam";
     return s1==e1;
   }
   bool pass_check( String s1) {
@@ -21,7 +26,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(),
+
 
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -45,16 +50,25 @@ class Login extends StatelessWidget {
                 height: 16.0,
               ),
               TextFormField( // دي اللي بيتعمل ال input زرار
-                controller: email_cont,
+                controller: email_cont1,
                 keyboardType: TextInputType.emailAddress,
                 onFieldSubmitted:( String value){
                   print(value);
                 } ,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal, width: 2.0),
+                    // borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  border:OutlineInputBorder(
+                    borderSide:BorderSide(color: Colors.teal),
+                  ),
+
                   labelText: "Email Address",
+                  labelStyle: TextStyle(color: Colors.teal),
                   prefixIcon:Icon(
                     Icons.email,
+                    color: Colors.grey,
                   ),
                 ),
 
@@ -64,16 +78,22 @@ class Login extends StatelessWidget {
               ),
            //////////////////
               TextFormField( // دي اللي بيتعمل ال inputbox
-                controller: pass_cont,
+                controller: pass_cont1 ,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true, // بتخلي الكلام اللي هتكتبه مخفي
                 onFieldSubmitted:( String value){
                   print(value);
                 } ,
                 decoration: InputDecoration(
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal),
+                  ) ,
+
                   border: OutlineInputBorder(),
                   labelText: "Password",
+                  labelStyle: TextStyle(color: Colors.teal),
                   prefixIcon:Icon(
+                    color:Colors.grey ,
                     Icons.lock,
                   ),
                   suffix: Icon(
@@ -86,21 +106,23 @@ class Login extends StatelessWidget {
                 height: 16.0,
               ),
               Container(
-                color: Colors.indigo,
+                color: Colors.teal,
                 width: double.infinity,
                 child: MaterialButton(
                     onPressed: (){
                       //print(email_cont.text);
                       //print(pass_cont.text);
-                      if(Email_check(email_cont.text )&& pass_check(pass_cont.text))
+                      if(Email_check(email_cont1.text )&& pass_check(pass_cont1.text))
                         {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
-                        MaterialPageRoute(builder:(context)=> EmployeeProfile()),);
+                        MaterialPageRoute(builder:(context)=> EmployeeHome()),);
                         }
                       else
                         {
-                         print("invalid email");
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder:(context)=> CompHome()),);
                         }
                     },
                   child:Text
@@ -135,7 +157,7 @@ class Login extends StatelessWidget {
                        "SignUp",
                        style: TextStyle(
                          fontSize: 16.0,
-
+                         color: Colors.teal,
                        ),
                       ),
                   ),
